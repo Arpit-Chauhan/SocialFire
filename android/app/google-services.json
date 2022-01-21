@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "590027780542",
+    "project_id": "socialfire-a40b3",
+    "storage_bucket": "socialfire-a40b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590027780542:android:28677879eeb9fc14d149ef",
+        "android_client_info": {
+          "package_name": "com.example.socialfire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590027780542-9pipfd48tg69muprko4bnmbvs7138g63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO9t0yaA03_c5jbMc3_u24ASKt5mEcHKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590027780542-9pipfd48tg69muprko4bnmbvs7138g63.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "590027780542-v4d5i3a11ps3sub3imn07jecq2e18hun.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.socialfire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

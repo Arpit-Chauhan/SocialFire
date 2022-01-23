@@ -35,6 +35,7 @@ dependencies:
   flutter_svg:
   image_picker:
   provider:
+  uuid:
 
 dev_dependencies:
   flutter_test:

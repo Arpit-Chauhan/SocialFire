@@ -26,6 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   Uint8List? image;
+
   bool isLoading = false;
 
   //TODO: convert asset image to uint8list file
@@ -38,6 +39,17 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _bioController.dispose();
     _usernameController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializeImage();
+  }
+
+  void initializeImage() async {
+    final ByteData bytes = await rootBundle.load('assets/dummyprofilepic.png');
+    Uint8List im = bytes.buffer.asUint8List();
   }
 
   void selectImage() async {

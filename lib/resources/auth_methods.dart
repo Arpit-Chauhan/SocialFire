@@ -36,7 +36,7 @@ class AuthMethods {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        String photoUrl = await StroageMethods()
+        String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
 
         //to add user to database

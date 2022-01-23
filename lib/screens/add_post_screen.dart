@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:socialfire/providers/user_provider.dart';
+import 'package:socialfire/resources/firestore_methods.dart';
 import 'package:socialfire/utils/colors.dart';
 import 'package:socialfire/utils/utils.dart';
 
@@ -19,13 +20,44 @@ class AddPostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
   final TextEditingController _descriptionController = TextEditingController();
+  bool _isLoading = false;
+
   @override
   void dispose() {
     super.dispose();
     _descriptionController.dispose();
   }
 
-  void postImage(String uid, String username, String profImage) async {}
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
+  void postImage(String uid, String username, String profImage) async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      String res = await FirestoreMethods().uploadPost(
+          _descriptionController.text, _file!, uid, username, profImage);
+
+      if (res == "success") {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar('Posted', context);
+        clearImage();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(res, context);
+      }
+    } catch (err) {
+      showSnackBar(err.toString(), context);
+    }
+  }
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -37,7 +69,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             children: [
               SimpleDialogOption(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: const Text('Take a photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
@@ -48,7 +80,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 },
               ),
               SimpleDialogOption(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: const Text('Choose from gallery'),
                 onPressed: () async {
                   Navigator.of(context).pop();
@@ -59,6 +91,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 },
               ),
               SimpleDialogOption(
+                padding: EdgeInsets.all(15),
                 child: const Text('Cancel'),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -87,12 +120,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 centerTitle: false,
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
-                  onPressed: () {},
+                  onPressed: clearImage,
                 ),
                 actions: [
                   TextButton(
-                    onPressed: () {},
-                    // postImage(user.uid, user.username, user.photoUrl),
+                    onPressed: () =>
+                        postImage(user.uid, user.username, user.photoUrl),
                     child: Text(
                       'Post',
                       style: TextStyle(
@@ -106,6 +139,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               body: Column(
                 children: [
+                  _isLoading
+                      ? LinearProgressIndicator()
+                      : const Padding(
+                          padding: EdgeInsets.only(top: 0),
+                        ),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:socialfire/providers/user_provider.dart';
-import 'package:socialfire/utils/global_variables.dart';
+import 'package:socialfire/utils/global_variable.dart';
 
 class ResponsiveLayout extends StatefulWidget {
-  final Widget webScreenLayout;
   final Widget mobileScreenLayout;
-
+  final Widget webScreenLayout;
   const ResponsiveLayout({
     Key? key,
-    required this.webScreenLayout,
     required this.mobileScreenLayout,
+    required this.webScreenLayout,
   }) : super(key: key);
 
   @override
@@ -24,19 +23,19 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
     addData();
   }
 
-  void addData() async {
-    UserProvider _userProvider = Provider.of(context, listen: false);
+  addData() async {
+    UserProvider _userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     await _userProvider.refreshUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    //layout builder used for responsive app
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > webScreenSize) {
+        // 600 can be changed to 900 if you want to display tablet screen with mobile screen layout
         return widget.webScreenLayout;
       }
-      // mobile layout
       return widget.mobileScreenLayout;
     });
   }

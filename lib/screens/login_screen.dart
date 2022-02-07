@@ -75,12 +75,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
               ),
               SvgPicture.asset(
-                'assets/ic_instagram.svg',
+                'assets/b.svg',
                 color: primaryColor,
-                height: 64,
+                height: 72,
               ),
               const SizedBox(
-                height: 64,
+                height: 52,
               ),
               TextFieldInput(
                 hintText: 'Enter your email',
